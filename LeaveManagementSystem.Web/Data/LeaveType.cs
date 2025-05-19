@@ -8,7 +8,7 @@ namespace LeaveManagementSystem.Web.Data
 
         [Column(TypeName = "Nvarchar(150)")]
         public string Name { get; set; } // e.g. Annual Leave, Sick Leave
-        public int NUmberOfDays { get; set; }
+        public int NumberOfDays { get; set; }
 
     }
 }
