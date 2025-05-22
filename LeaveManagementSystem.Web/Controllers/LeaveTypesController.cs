@@ -1,29 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using LeaveManagementSystem.Web.Data;
-using LeaveManagementSystem.Web.Models.LeaveType;
-using AutoMapper;
+﻿using LeaveManagementSystem.Web.Models.LeaveType;
 using LeaveManagementSystem.Web.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeaveManagementSystem.Web.Controllers
 {
+    [Authorize(Roles = Roles.Admin)]
     public class LeaveTypesController(ILeaveTypesService leaveTypeService) : Controller
     {
         private const string NameExistValidationMessage = "This leave types already exist in database";
         private readonly ILeaveTypesService _leaveTypeService = leaveTypeService;
-  // GET: LeaveTypes
         public async Task<IActionResult> Index()
         {
             var viewData = await _leaveTypeService.GetAll();
             return View(viewData);
         }
-
-        // GET: LeaveTypes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,7 +29,6 @@ namespace LeaveManagementSystem.Web.Controllers
             return View(leaveType);
         }
 
-        // GET: LeaveTypes/Create
         public IActionResult Create()
         {
             return View();

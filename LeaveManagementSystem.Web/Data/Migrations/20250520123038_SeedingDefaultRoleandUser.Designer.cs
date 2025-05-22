@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LeaveManagementSystem.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250516151103_LeaveTypesTable")]
-    partial class LeaveTypesTable
+    [Migration("20250520123038_SeedingDefaultRoleandUser")]
+    partial class SeedingDefaultRoleandUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,12 @@ namespace LeaveManagementSystem.Web.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("NUmberOfDays")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("Nvarchar(150)");
+
+                    b.Property<int>("NumberOfDays")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -70,6 +70,26 @@ namespace LeaveManagementSystem.Web.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "d5064038-32d2-4545-a5f2-a33c62df1803",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
+                        },
+                        new
+                        {
+                            Id = "d5cc9a1d-dabe-4a85-ba55-b19f73ced1db",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        },
+                        new
+                        {
+                            Id = "0257c513-3596-404b-b8f6-368caa8efba1",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -160,6 +180,24 @@ namespace LeaveManagementSystem.Web.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3159fda0-b934-4a57-bc07-d0a3615cf231",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "951b7569-cf31-4f93-90a7-34e95a9be158",
+                            Email = "admin@gmail.test",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.TEST",
+                            NormalizedUserName = "ADMIN@GMAIL.TEST",
+                            PasswordHash = "AQAAAAIAAYagAAAAEClDjg3oNtWNZk1AxVGOcY1sdN8YMklOaccxn5m6jC4mjMfn0q9rmS27ObPqgAqHIw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e2c7670f-efab-4331-91e6-a03de13570b7",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.test"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserClaim<string>", b =>
@@ -224,6 +262,13 @@ namespace LeaveManagementSystem.Web.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3159fda0-b934-4a57-bc07-d0a3615cf231",
+                            RoleId = "0257c513-3596-404b-b8f6-368caa8efba1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.ApplicationUserToken<string>", b =>
